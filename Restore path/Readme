@@ -1,0 +1,54 @@
+# Monitoramento e Cópia de Pastas com Python
+
+Este script monitora uma pasta específica e, sempre que uma nova pasta é criada, ele verifica se existe uma pasta com o mesmo nome em um diretório de origem. Caso a pasta seja encontrada, o script copia todo o conteúdo da pasta de origem para a nova pasta criada. Ele é capaz de lidar com múltiplas pastas e também realiza uma verificação de espaço no disco antes de iniciar a cópia.
+
+## Requisitos
+
+1. Python 3.x
+2. Pacotes necessários:
+   - `watchdog`: Para monitorar eventos de criação de pastas em tempo real.
+   - `shutil`: Para operações de cópia de arquivos e diretórios.
+   - `os`: Para manipulação de caminhos e iteração em diretórios.
+   - `logging`: Para registrar logs e facilitar o monitoramento do funcionamento do script.
+
+### Instalação dos pacotes necessários
+
+Você pode instalar o `watchdog` usando o pip:
+
+```bash
+pip install watchdog
+
+Estrutura do Script
+pasta_monitorada: O diretório que será monitorado para novas pastas.
+pasta_origem: O diretório onde o script busca por pastas com o mesmo nome que as pastas recém-criadas.
+copiar_conteudo(): Função que copia os arquivos e subpastas da pasta de origem para a nova pasta criada.
+MonitoramentoHandler: Classe que lida com os eventos do watchdog e chama a função de cópia de conteúdo quando uma nova pasta é detectada.
+iniciar_monitoramento(): Função principal que inicia o processo de monitoramento da pasta especificada.
+
+Como Usar
+1. Configuração de Caminhos
+No script, você deve configurar dois diretórios:
+
+pasta_monitorada: Diretório que será monitorado para novas pastas criadas.
+pasta_origem: Diretório onde o script busca as pastas com o mesmo nome para copiar o conteúdo.
+
+2. Executar o Script
+Depois de configurar os caminhos, execute o script:
+
+O script irá:
+
+Monitorar a pasta definida em pasta_monitorada.
+Sempre que uma nova pasta for criada, ele verificará se uma pasta com o mesmo nome existe em pasta_origem.
+Se a pasta de origem existir, ele copiará todo o conteúdo da pasta de origem para a nova pasta criada.
+Ele também verifica se há espaço suficiente no disco antes de iniciar a cópia e registra logs sobre o andamento.
+
+3. Logs
+O script gera logs que podem ser usados para depurar ou monitorar o processo. O nível de log está configurado para INFO e as mensagens incluem:
+
+Detecção de novas pastas.
+Início e término de cópias.
+Falhas ou problemas encontrados, como falta de espaço no disco.
+
+4. Verificação de Espaço em Disco
+O script verifica automaticamente se há espaço suficiente no destino antes de copiar qualquer arquivo. Se não houver, ele registrará um erro no log e a cópia não será realizada.
+
