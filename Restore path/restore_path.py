@@ -9,8 +9,8 @@ from watchdog.events import FileSystemEventHandler
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 
 # Caminhos de monitoramento e origem
-pasta_monitorada = r'C:\Users\waoliveira\Documents\teste1'  # Pasta de rede a ser monitorada
-pasta_origem = r'C:\Users\waoliveira\Documents\teste'      # Pasta onde procurar pastas com o mesmo nome
+pasta_monitorada = r'C:\exemplo\exemplo'  # Pasta de rede a ser monitorada
+pasta_origem = r'C:\exemplo\exemplo'      # Pasta onde procurar pastas com o mesmo nome
 
 # Função para verificar se há espaço suficiente no disco de destino
 def espaco_suficiente(necessario, destino):
