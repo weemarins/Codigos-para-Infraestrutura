@@ -1,0 +1,3 @@
+Antes de executar o script, você precisará modificar as variáveis $novaOU e $caminhoLista de acordo com sua estrutura do Active Directory e o local do arquivo que contém os endereços de e-mail dos usuários a serem movidos.
+
+Certifique-se de ter permissões adequadas para executar operações no Active Directory. Além disso, teste este script em um ambiente de teste antes de usar em um ambiente de produção para garantir que ele se comporte conforme o esperado.

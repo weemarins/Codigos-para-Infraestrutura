@@ -1,0 +1,3 @@
+Antes de executar o script, substitua $caminhoLista pelo caminho completo do arquivo de texto que contém os nomes das OUs que você deseja criar. Além disso, modifique o parâmetro -Path na função New-ADOrganizationalUnit para especificar o caminho onde deseja criar essas OUs dentro do seu domínio do Active Directory.
+
+Lembre-se de executar o PowerShell com permissões elevadas para realizar operações no Active Directory. Teste este script em um ambiente de teste antes de executá-lo em um ambiente de produção para garantir que ele funcione conforme o esperado e que os caminhos e permissões estejam configurados corretamente.
