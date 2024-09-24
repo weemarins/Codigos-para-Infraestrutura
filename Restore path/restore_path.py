@@ -9,8 +9,17 @@ from watchdog.events import FileSystemEventHandler
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 
 # Caminhos de monitoramento e origem
-pasta_monitorada = r'C:\exemplo\exemplo'  # Pasta de rede a ser monitorada
-pasta_origem = r'C:\exemplo\exemplo'      # Pasta onde procurar pastas com o mesmo nome
+pasta_monitorada = r'\\bbraszhenghe\c$\users'  # Pasta de rede a ser monitorada
+pasta_origem = r'\\Bbrasbkptpy02\backup-zhenghe\Perfis'      # Pasta onde procurar pastas com o mesmo nome
+
+# Função para verificar se uma pasta é oculta no Windows
+def is_hidden(filepath):
+    try:
+        attrs = os.stat(filepath).st_file_attributes
+        # Atributo de arquivo oculto no Windows
+        return attrs & 0x02
+    except AttributeError:
+        return False
 
 # Função para verificar se há espaço suficiente no disco de destino
 def espaco_suficiente(necessario, destino):
@@ -28,6 +37,11 @@ def copiar_conteudo(origem, destino):
             return
 
         for root, dirs, files in os.walk(origem):
+            # Ignora pastas ocultas e a pasta AppData
+            if 'AppData' in root or is_hidden(root):
+                logging.info(f'Pasta ignorada (oculta ou AppData): {root}')
+                continue
+
             # Calcula o caminho relativo da origem para manter a estrutura de pastas
             caminho_relativo = os.path.relpath(root, origem)
             destino_completo = os.path.join(destino, caminho_relativo)
@@ -40,7 +54,14 @@ def copiar_conteudo(origem, destino):
             for file in files:
                 origem_arquivo = os.path.join(root, file)
                 destino_arquivo = os.path.join(destino_completo, file)
-                shutil.copy2(origem_arquivo, destino_arquivo)  # Copia o arquivo preservando metadados
+                
+                # Tentar copiar o arquivo e ignorar caso esteja bloqueado
+                try:
+                    shutil.copy2(origem_arquivo, destino_arquivo)  # Copia o arquivo preservando metadados
+                except PermissionError:
+                    logging.warning(f'Arquivo bloqueado e ignorado: {origem_arquivo}')
+                except Exception as e:
+                    logging.error(f'Erro ao copiar arquivo {origem_arquivo}: {e}')
 
         logging.info(f'Todo o conteúdo da pasta {origem} foi copiado para {destino}.')
 
